@@ -8,9 +8,12 @@
 
 body{
     background-color: rgb(15, 15, 74);
-}
-img{
     width: 100%;
+    height: 100vh;
+}
+section{
+    width: 100%;
+    
 }
 
 #about{
@@ -41,4 +44,39 @@ img{
     justify-content: center;
     align-items: center;
 
+}
+.aboutme{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+
+}
+.aboutme .front{
+    position: absolute;
+    color: rgb(255, 208, 0);
+    z-index: 1;
+}
+
+.aboutme .back{
+    position: absolute;
+    font-size: 4rem;
+    color: rgb(6, 6, 41);
+    opacity: 0.5;
+    z-index: 0;
+
+}
+
+.image{
+    width: 300px;
+    height: 400px;
+    background-image: url(./Assets/20240922_123034.jpg);
+    background-position: center;
+    background-size: 200%;
+    background-repeat: no-repeat;
+    border-radius: 1rem;
+    box-shadow: 10px 10px 10px rgb(6, 6, 41);
+    margin-top: 3rem;
 }
