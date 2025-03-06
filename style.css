@@ -1,0 +1,44 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: white;
+}
+
+body{
+    background-color: rgb(15, 15, 74);
+}
+img{
+    width: 100%;
+}
+
+#about{
+    
+}
+
+#socials{
+    list-style: none;
+    
+}
+
+#socials li{
+    margin-top: 1rem;
+    
+    
+    
+}
+
+#socials li i{
+    color: white;
+    border: 1px solid white;
+    padding: 10px;
+    border-radius: 50%;
+    margin: 0rem 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
