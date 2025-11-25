@@ -34,3 +34,25 @@ document.getElementById("showMoreBtn").addEventListener("click", function() {
     }
 });
 console.log('shown')
+
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const iframes = document.querySelectorAll("iframe[src*='vimeo.com']");
+    const players = [];
+
+    // Load Vimeo Player API
+    iframes.forEach((iframe) => {
+      const player = new Vimeo.Player(iframe);
+      players.push(player);
+
+      player.on("play", () => {
+        players.forEach((p) => {
+          if (p !== player) {
+            p.pause();
+          }
+        });
+      });
+    });
+  });
+
