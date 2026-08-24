@@ -243,7 +243,7 @@
 <!-- HERO -->
 <header class="hero" id="top">
   <div class="wrap">
-    <div class="tc"><span class="line"></span> INTRO</div>
+    <div class="tc">00:00:00:00 <span class="line"></span> INTRO</div>
     <h1>Visuals that speak.<br>Motion that <span class="accent">moves.</span></h1>
     <p class="lead">I design bold brand identities and scroll-stopping motion graphics for founders and studios who need to look as sharp as the work they do.</p>
     <div class="hero-cta">
@@ -261,7 +261,7 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="wrap">
-    <div class="tc"><span class="line"></span> ABOUT</div>
+    <div class="tc">00:01:12:00 <span class="line"></span> ABOUT</div>
     <div class="about-grid">
       <div class="about-photo">
         <img src="./Assets/profile.png" alt="Greg David">
@@ -287,7 +287,7 @@
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="tc"><span class="line"></span> SELECTED WORK</div>
+        <div class="tc">00:02:30:00 <span class="line"></span> SELECTED WORK</div>
         <h2>Best work, at a glance.</h2>
       </div>
       <p>A mix of motion graphics and full brand identity systems — filter by discipline below.</p>
@@ -428,7 +428,7 @@
       <li><a href="#">Instagram</a></li>
       <li><a href="#">LinkedIn</a></li>
     </ul>
-    <p>© 2026 Greg David — designed &amp; built for nynvisuals</p>
+    <p>© 2026 Greg David — designed &amp; built for Imaginate</p>
   </div>
 </footer>
 
@@ -466,6 +466,38 @@
         item.classList.toggle('hidden', !show);
       });
     });
+  });
+
+  // ---------- Vimeo playback control ----------
+  // 1) only one video plays at a time
+  // 2) a playing video pauses itself once scrolled out of view
+  const vimeoIframes = Array.from(document.querySelectorAll('.frame iframe[src*="player.vimeo.com"]'));
+  const players = vimeoIframes.map(iframe => new Vimeo.Player(iframe));
+
+  players.forEach(player => {
+    player.on('play', () => {
+      players.forEach(other => {
+        if (other !== player) other.pause().catch(() => {});
+      });
+    });
+  });
+
+  const frameObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        const iframe = entry.target.querySelector('iframe[src*="player.vimeo.com"]');
+        if (!iframe) return;
+        const idx = vimeoIframes.indexOf(iframe);
+        if (idx === -1) return;
+        players[idx].getPaused().then(paused => {
+          if (!paused) players[idx].pause().catch(() => {});
+        }).catch(() => {});
+      }
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('.card .frame').forEach(frame => {
+    if (frame.querySelector('iframe[src*="player.vimeo.com"]')) frameObserver.observe(frame);
   });
 </script>
 
