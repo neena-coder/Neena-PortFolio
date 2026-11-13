@@ -87,6 +87,28 @@ function buildPanel(video, index, total) {
   ph.className = 'ph';
   ph.textContent = media ? '' : 'Video unavailable';
   frame.appendChild(ph);
+
+  // A dedicated touch-friendly control makes fullscreen easy to discover.
+  const fullscreenBtn = document.createElement('button');
+  fullscreenBtn.className = 'fullscreen-btn';
+  fullscreenBtn.type = 'button';
+  fullscreenBtn.setAttribute('aria-label', 'View video fullscreen');
+  fullscreenBtn.title = 'View fullscreen';
+  fullscreenBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3" /></svg>';
+  fullscreenBtn.addEventListener('click', async () => {
+    try {
+      if (frame.requestFullscreen) {
+        await frame.requestFullscreen();
+      } else if (frame.webkitRequestFullscreen) {
+        frame.webkitRequestFullscreen();
+      } else if (p.node && p.node.tagName === 'VIDEO' && p.node.webkitEnterFullscreen) {
+        p.node.webkitEnterFullscreen();
+      }
+    } catch (error) {
+      console.warn('Fullscreen could not be opened:', error);
+    }
+  });
+  frame.appendChild(fullscreenBtn);
   vwrap.appendChild(frame);
 
   const shade = document.createElement('div');
