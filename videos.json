@@ -1,0 +1,50 @@
+[
+  {
+    "order": 1,
+    "title": "Smartbloks VSL",
+    "tag": "VSL",
+    "description": "A dynamic VSL using clean visuals and sharp transitions to simplify complex ideas from first frame to CTA.",
+    "url": "https://vimeo.com/1140417993",
+    "ratio": "16:9"
+  },
+  {
+    "order": 2,
+    "title": "Smartbloks Promo Ad",
+    "tag": "Promo ad",
+    "description": "A striking promotional ad with dynamic logo animation designed to capture attention instantly.",
+    "url": "https://vimeo.com/1140429115",
+    "ratio": "16:9"
+  },
+  {
+    "order": 3,
+    "title": "Limova AI Promo",
+    "tag": "Short-form promo",
+    "description": "A short-form piece that shifts from chaotic, glitchy visuals into smooth motion to sell AI automation.",
+    "url": "https://vimeo.com/1182975780",
+    "ratio": "16:9"
+  },
+  {
+    "order": 4,
+    "title": "Smartbloks Onboarding",
+    "tag": "Onboarding",
+    "description": "Sleek onboarding motion graphics with smooth transitions and clear storytelling for new users.",
+    "url": "https://vimeo.com/1140418433",
+    "ratio": "16:9"
+  },
+  {
+    "order": 5,
+    "title": "NYN Visuals Logo Reveal",
+    "tag": "Logo reveal",
+    "description": "A bold, dynamic logo reveal with polished transitions built to amplify the brand's identity instantly.",
+    "url": "https://vimeo.com/1140885530",
+    "ratio": "16:9"
+  },
+  {
+    "order": 6,
+    "title": "X Group Identity Reveal",
+    "tag": "Identity reveal",
+    "description": "A clean exploration of fluid motion and structural elegance, reflecting a brand built on precision.",
+    "url": "https://vimeo.com/1178176784",
+    "ratio": "16:9"
+  }
+]

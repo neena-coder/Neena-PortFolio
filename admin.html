@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Greg David</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#070707; --surface:#101011; --line:rgba(255,255,255,.1); --ink:#f4f4f2; --dim:#9a9a9a; --accent:#c6ff00; --bad:#ff6b6b; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:880px; margin:0 auto; padding:40px 20px 100px; }
+  h1{ font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.7rem; letter-spacing:-.02em; }
+  h1 span{ color:var(--accent); }
+  h2{ font-family:'Montserrat',sans-serif; font-size:1.05rem; margin-bottom:16px; }
+  .top{ display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:32px; flex-wrap:wrap; }
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:24px; }
+  label{ display:block; font-size:.82rem; color:var(--dim); margin:14px 0 6px; }
+  input, textarea, select{
+    width:100%; background:#0a0a0a; color:var(--ink); border:1px solid var(--line); border-radius:8px;
+    padding:11px 13px; font:inherit; font-size:.95rem;
+  }
+  textarea{ resize:vertical; min-height:80px; }
+  input:focus, textarea:focus, select:focus{ outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+  .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:600px){ .row{ grid-template-columns:1fr; } }
+  button{
+    font:inherit; font-weight:600; font-size:.9rem; cursor:pointer; border-radius:100px;
+    padding:10px 20px; border:1px solid var(--line); background:transparent; color:var(--ink);
+    transition:border-color .2s, color .2s, transform .15s;
+  }
+  button:hover{ border-color:var(--accent); color:var(--accent); }
+  button.primary{ background:var(--accent); color:#0a0a0a; border-color:var(--accent); }
+  button.primary:hover{ color:#0a0a0a; transform:translateY(-1px); }
+  button.danger:hover{ border-color:var(--bad); color:var(--bad); }
+  button:disabled{ opacity:.5; cursor:default; transform:none; }
+  .actions{ display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+  .hint{ font-size:.82rem; margin-top:6px; min-height:1.2em; color:var(--dim); }
+  .hint.ok{ color:var(--accent); } .hint.bad{ color:var(--bad); }
+  .msg{ font-size:.9rem; margin-top:14px; min-height:1.3em; }
+  .msg.ok{ color:var(--accent); } .msg.bad{ color:var(--bad); }
+  .list{ list-style:none; }
+  .item{
+    display:grid; grid-template-columns:34px 1fr auto; gap:14px; align-items:center;
+    padding:14px 0; border-top:1px solid var(--line);
+  }
+  .item:first-child{ border-top:0; }
+  .num{ font-family:'Montserrat',sans-serif; font-weight:700; color:var(--accent); font-size:.85rem; }
+  .item .t{ font-weight:600; overflow-wrap:anywhere; }
+  .item .s{ font-size:.8rem; color:var(--dim); overflow-wrap:anywhere; }
+  .item .btns{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+  .item .btns button{ padding:6px 12px; font-size:.8rem; }
+  .empty{ color:var(--dim); font-size:.92rem; }
+  .notice{ border-color:rgba(198,255,0,.35); }
+  .notice ol{ margin:12px 0 0 20px; color:#cfcfcf; }
+  code{ background:#1a1a1a; padding:1px 6px; border-radius:4px; font-size:.85em; }
+  a{ color:var(--accent); }
+  [hidden]{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Portfolio <span>admin</span></h1>
+    <div>
+      <a href="./index.html">View site</a>
+      <button id="signOut" hidden style="margin-left:14px">Sign out</button>
+    </div>
+  </div>
+
+  <!-- Firebase not set up yet -->
+  <div class="card notice" id="notConfigured" hidden>
+    <h2>Firebase isn't connected yet</h2>
+    <p>Fill in <code>firebase-config.js</code> with your Firebase project details, then reload this page. Full steps are in <code>SETUP.md</code>.</p>
+  </div>
+
+  <!-- Login -->
+  <div class="card" id="loginCard" hidden>
+    <h2>Sign in</h2>
+    <form id="loginForm" autocomplete="on">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <div class="actions"><button class="primary" type="submit">Sign in</button></div>
+      <p class="msg" id="loginMsg"></p>
+    </form>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dash" hidden>
+    <div class="card">
+      <h2 id="formTitle">Add a video</h2>
+      <form id="videoForm">
+        <label for="title">Title</label>
+        <input id="title" maxlength="80" required placeholder="Smartbloks VSL">
+
+        <div class="row">
+          <div>
+            <label for="tag">Label (optional)</label>
+            <input id="tag" maxlength="30" placeholder="VSL, Promo ad, Logo reveal">
+          </div>
+          <div>
+            <label for="ratio">Shape</label>
+            <select id="ratio">
+              <option value="16:9">Landscape 16:9</option>
+              <option value="9:16">Vertical 9:16</option>
+              <option value="1:1">Square 1:1</option>
+              <option value="4:5">Portrait 4:5</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="url">Video link</label>
+        <input id="url" type="url" required placeholder="https://vimeo.com/123456789 or a YouTube / .mp4 link">
+        <p class="hint" id="urlHint">YouTube, Vimeo or a direct .mp4 / .webm link.</p>
+
+        <label for="description">Description (optional)</label>
+        <textarea id="description" maxlength="300" placeholder="One or two lines about the piece."></textarea>
+
+        <div class="actions">
+          <button class="primary" type="submit" id="saveBtn">Add video</button>
+          <button type="button" id="cancelEdit" hidden>Cancel edit</button>
+        </div>
+        <p class="msg" id="formMsg"></p>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Your videos <span id="countLabel" style="color:var(--dim);font-weight:400"></span></h2>
+      <p class="empty" id="empty" hidden>No videos yet. Add one above, or load the starter set.</p>
+      <ul class="list" id="list"></ul>
+      <div class="actions"><button id="seedBtn" hidden>Load starter videos</button></div>
+      <p class="msg" id="listMsg"></p>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./admin.js"></script>
+</body>
+</html>
